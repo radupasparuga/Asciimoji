@@ -1,6 +1,6 @@
 extern crate iui;
 use iui::prelude::*;
-use iui::controls::{Entry, VerticalBox, Group, Label, HorizontalBox};
+use iui::controls::{Entry, VerticalBox, Group, Label };
 use std::rc::Rc;
 use std::cell::RefCell;
 
@@ -13,7 +13,7 @@ fn main() {
     let state = Rc::new(RefCell::new(State { entry_val: "".into() }));
 
     let (input_group, mut entry) = {
-        let mut input_group = Group::new(&ui, "Inputs");
+        let mut input_group = Group::new(&ui, "Search");
         let mut input_vbox = VerticalBox::new(&ui);
         input_vbox.set_padded(&ui, true);
 
@@ -25,7 +25,7 @@ fn main() {
     };
 
     let (output_group, text_label) = {
-        let mut output_group = Group::new(&ui, "Outputs");
+        let mut output_group = Group::new(&ui, "Results");
         let mut output_vbox = VerticalBox::new(&ui);
         let text_label = Label::new(&ui, "");
 
@@ -34,12 +34,12 @@ fn main() {
         (output_group, text_label)
     };
 
-    let mut hbox = HorizontalBox::new(&ui);
-    hbox.append(&ui, input_group, LayoutStrategy::Stretchy);
-    hbox.append(&ui, output_group, LayoutStrategy::Stretchy);
+    let mut vbox = VerticalBox::new(&ui);
+    vbox.append(&ui, input_group, LayoutStrategy::Compact);
+    vbox.append(&ui, output_group, LayoutStrategy::Stretchy);
 
-    let mut window = Window::new(&ui, "Input output Test", 1280, 720, WindowType::NoMenubar);
-    window.set_child(&ui, hbox);
+    let mut window = Window::new(&ui, "Asciimoji", 1280, 720, WindowType::NoMenubar);
+    window.set_child(&ui, vbox);
     window.show(&ui);
 
     entry.on_changed(&ui, {
